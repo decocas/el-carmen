@@ -1,0 +1,140 @@
+<div class="container-fluid"   >
+	<div class="row">
+		<button  type="submit" (click)="back()" class="btn btn-danger ">salir</button>
+ 	   <!--<button class="btn btn-danger"  type="submit" (click)="graph()">Estadisticas</button>--> 
+<h1 class="text-danger">Bienvenido</h1>
+ 	</div>
+
+<div class="col">
+<br>
+<hr> <div *ngIf="total"><h3 class="text-info"> Ventas del dia: ${{total}} </h3>   </div>
+<br>
+<h3 >Realizar Pedido</h3>
+<div *ngFor="let i of f" [class.selected]="a===frito" (click)="abrir(i)" > 
+ <ul  class="list-group-sm-3" >
+ 	<li *ngIf="i.estado==true"> <button class="btn btn-outline-danger btn-sm"><span class="badge "><h6>{{i.nombre|uppercase}}</h6></span></button>
+ 		   <span  class="badge text-danger"><h6>${{i.precio}}/cu</h6></span> </li>
+ </ul>
+ 	 <div *ngIf="i.estado==false">
+ 	 	<button (click)="insumo.recargar(i)" class="btn btn-outline-info btn-sm"> recargar inventario </button>
+ 	 </div>
+</div>
+
+  
+<div *ngIf="frito"  class="row" >
+    <h4 class="text-danger">Usted pidio: {{frito.nombre|uppercase}}</h4>
+<div class="col-lg-8">
+
+<div class="form">
+	
+	<form class="form-group"  >
+		<div class="form-group-sm-8">
+			<input  class="form-group" type="number" min="1" max="20" value="cantidad" placeholder="cantidad"   name="cantidad" id="cantidad" [(ngModel)]="aux.cantidad"> 
+	  </div>
+		<div>
+	<button  (click)="calcular(frito,aux.cantidad)"  type="submit" class="btn btn-outline-success">
+					<i class="material-icons">done</i>accept</button>
+	<button type="reset" class="btn btn-outline-danger" (click)="refrescar()"><i class="material-icons">autorenew</i>refresh
+    </button>
+	
+		</div>	
+		<div class="col-lg-6"><label class="text-danger">Precio:  <h2 class="text-success">${{n}}</h2></label>
+			<div class="row-sm-4"  *ngIf="msj=='pedido procesado, cierre la notificación'"> <!--anuncio-->
+				   <div class="alert  alert-success alert-dismissible fade show" role="alert">
+				   	<h4 class="text-success">{{msj}} </h4>
+				    <a (click)="cerrar()"  role="button" class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></a>
+				</div>
+             </div>
+			 <div   class="row-sm-4" *ngIf="msj=='pedido no procesado, cierre la notificación'">    <!--anuncio-->
+			       <div class="alert  alert-danger alert-dismissible fade show" role="alert">
+					<h4 class="text-danger">{{msj}} </h4>
+				    <a  (click)="cerrar()" role="button" class="close" data-dismiss="alert" aria-label="close"><span aria-hidden="true">&times;</span></a>
+				</div>
+			 </div>
+	  <div *ngIf="t && aux.cantidad && frito.estado" > 
+   <button (click)="agregar(frito,aux.cantidad)"    type="submit" class="btn btn-outline-success" >confirmar</button> 
+
+   </div>
+	  </div>
+	</form>
+	<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-4">
+     <button class="btn btn-outline-info btn-sm badge" data-toggle="collapse" data-target="#almacen" aria-expanded="false" aria-controls="almacen" ><i class="material-icons">view_list</i>
+ 			<h6>Revisar Inventario</h6> </button>
+ 		<div class="collapse" id="almacen">
+ 			<div class="card card-body" style="width: 15rem;">
+ 				<div>
+ 					<div class="table-responsive-sm">
+ <table class="table"  >
+  <thead>
+    <tr>
+      
+      <th scope="col" class="text-secondary">Frito</th>
+      <th scope="col" class="text-secondary">Cantidad/U</th>
+           </tr>
+  </thead>
+  <tbody *ngFor="let a of insumo.lista">
+    <tr>
+      <th scope="row">{{a.frito}}</th>
+      <td class="text-info">{{a.cantidad}} </td>
+           </tr>
+    
+  </tbody>
+</table>
+</div>
+ 				</div>
+ 			
+ 			</div>
+ 			
+ 		</div>
+    </div>
+    <div *ngIf="t && aux.cantidad && frito.estado" class="col-lg">
+      <div class="container-fluid" ><button class="btn  btn-outline-info btn-sm badge" data-toggle="collapse" data-target="#cliente" aria-expanded="false" aria-controls="cliente"><i class="material-icons">account_circle</i><h6> cliente </h6></button>
+		<div class="collapse" id="cliente">
+			<div class="card card-body" style="width: 12rem;">
+				<div class="form">
+					<div class="form-group-sm-4">
+					<input required=":required" value="nombre" type="text" name="nombre" class="form-control" id="nombre" placeholder="Nombre">
+					</div>
+				   <div class="form-group-sm-4">
+					<input required=":required" value="apellido" type="text" name="apellido" class="form-control" id="apellido" placeholder="Apellido">
+					</div>
+					<div class="form-group-sm-4">
+						<input required=":required" value="tel" type="number" name="tel" class="form-control" id="tel" placeholder="Telefono">
+					</div>
+					<div class="form-group-sm-4">
+						<input required=":required" value="email" type="email" name="email" class="form-control" id="email" placeholder="Correo">
+					</div>
+					<div class="form-action">
+	<button  type="submit" class="btn btn-outline-success">
+					<i class="material-icons">done</i>accept</button>
+	<button type="reset" class="btn btn-outline-danger"><i class="material-icons">clear</i>cancel</button>
+	
+		</div>	
+				</div> 
+			</div>
+		</div>
+
+
+	</div>	
+    </div>
+  </div>
+   
+	 
+	
+	</div><!-- fin -->
+	
+   		
+</div>
+</div>
+
+ 
+</div>
+
+       
+ </div>
+ 
+ </div>
+ 
+<router-outlet></router-outlet>
